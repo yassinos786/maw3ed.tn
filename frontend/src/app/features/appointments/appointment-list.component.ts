@@ -356,7 +356,7 @@ type DoctorTab = 'APPOINTMENTS' | 'SLOTS' | 'PROFILE';
             </button>
           </div>
 
-          <!-- Filtres de date et statut ergonomiques (Espace Aéré) -->
+          
           <div class="slot-filters-toolbar mt-3 mb-3">
             <div class="slot-date-pills">
               <button
@@ -738,7 +738,7 @@ type DoctorTab = 'APPOINTMENTS' | 'SLOTS' | 'PROFILE';
       box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
       border-color: #cbd5e1;
     }
-    .card-left { flex: 1; min-width: 280px; }
+    .card-left { flex: 1 1 280px; min-width: 0; max-width: 100%; overflow-wrap: anywhere; word-break: break-word; }
     .appointment-card.is-cancelled {
       opacity: 0.8;
       background: #fafafb;
@@ -750,14 +750,14 @@ type DoctorTab = 'APPOINTMENTS' | 'SLOTS' | 'PROFILE';
       justify-content: center;
       padding: 0.5rem 0;
     }
-    .card-right { display: flex; flex-direction: column; align-items: flex-end; }
+    .card-right { display: flex; flex-direction: column; align-items: flex-end; max-width: 100%; }
     .badges-row { display: flex; align-items: center; flex-wrap: wrap; gap: 0.45rem; }
-    .apt-title { font-size: 1.2rem; font-weight: 800; color: var(--color-dark); }
-    .apt-specs { color: var(--color-muted); font-size: 0.88rem; margin-top: 0.15rem; }
+    .apt-title { font-size: 1.2rem; font-weight: 800; color: var(--color-dark); overflow-wrap: anywhere; }
+    .apt-specs { color: var(--color-muted); font-size: 0.88rem; margin-top: 0.15rem; overflow-wrap: anywhere; word-break: break-word; }
     .apt-cabinet-link {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.45rem;
       color: var(--color-primary);
       text-decoration: none;
       font-weight: 600;
@@ -766,11 +766,16 @@ type DoctorTab = 'APPOINTMENTS' | 'SLOTS' | 'PROFILE';
       background: #f0f9ff;
       border: 1px solid #bae6fd;
       transition: all 0.2s ease;
-      margin-left: 0.25rem;
+      margin-top: 0.25rem;
+      max-width: 100%;
+      box-sizing: border-box;
       flex-wrap: wrap;
     }
     .apt-addr-text {
-      margin-right: 0.35rem;
+      min-width: 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      margin-right: 0.25rem;
     }
     .gps-badge-label {
       font-size: 0.74rem;
@@ -846,7 +851,7 @@ type DoctorTab = 'APPOINTMENTS' | 'SLOTS' | 'PROFILE';
     /* Slots Grid View - Spacieux & Aéré */
     .slots-grid-view {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
       gap: 1.15rem;
     }
     .slot-item-card {
@@ -974,7 +979,8 @@ type DoctorTab = 'APPOINTMENTS' | 'SLOTS' | 'PROFILE';
     .card-sub { background: var(--color-muted-light); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.25rem; }
     .sub-header { display: flex; justify-content: space-between; align-items: center; }
     .sub-title { font-weight: 700; color: var(--color-dark); font-size: 0.95rem; }
-    .input-action-group { display: flex; gap: 0.5rem; align-items: center; }
+    .input-action-group { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+    .input-action-group .form-control { flex: 1 1 220px; min-width: 0; }
     .test-gps-btn { white-space: nowrap; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.5rem 0.85rem; font-size: 0.82rem; }
     .gps-coords-badge { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.65rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: var(--radius-sm); font-size: 0.8rem; color: #065f46; margin-top: 0.5rem; }
   `]

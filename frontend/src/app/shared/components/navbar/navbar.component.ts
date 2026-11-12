@@ -103,7 +103,10 @@ import { AuthService } from '../../../core/services/auth.service';
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 74px;
+      min-height: 74px;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding: 0.4rem 0;
     }
     .brand {
       display: flex;

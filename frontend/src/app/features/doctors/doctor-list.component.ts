@@ -298,7 +298,7 @@ import { PaymentModalComponent } from '../../shared/components/payment-modal/pay
 
     .doctors-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
       gap: 1.75rem;
     }
     .doctor-card {
@@ -344,14 +344,16 @@ import { PaymentModalComponent } from '../../shared/components/payment-modal/pay
       justify-content: center;
       flex-shrink: 0;
     }
-    .doctor-meta { flex: 1; }
+    .doctor-meta { flex: 1; min-width: 0; overflow-wrap: anywhere; word-break: break-word; }
     .badge-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.4rem; }
     .badge-verified { background: #dcfce7; color: #166534; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; }
-    .doctor-name { font-size: 1.15rem; font-weight: 700; margin: 0 0 0.2rem 0; color: var(--color-dark); }
-    .doctor-specs { font-size: 0.85rem; color: var(--color-primary); font-weight: 600; margin: 0 0 0.4rem 0; }
+    .doctor-name { font-size: 1.15rem; font-weight: 700; margin: 0 0 0.2rem 0; color: var(--color-dark); overflow-wrap: anywhere; }
+    .doctor-specs { font-size: 0.85rem; color: var(--color-primary); font-weight: 600; margin: 0 0 0.4rem 0; overflow-wrap: anywhere; }
     
     .doctor-location-info {
       margin: 0.4rem 0 0.75rem;
+      min-width: 0;
+      max-width: 100%;
     }
     .doctor-location-pill {
       display: flex;
@@ -369,6 +371,8 @@ import { PaymentModalComponent } from '../../shared/components/payment-modal/pay
       transition: all 0.2s ease;
       cursor: pointer;
       width: 100%;
+      max-width: 100%;
+      overflow: hidden;
       box-sizing: border-box;
     }
     .doctor-location-pill:hover {
@@ -386,6 +390,10 @@ import { PaymentModalComponent } from '../../shared/components/payment-modal/pay
     .location-text {
       color: var(--color-dark);
       line-height: 1.35;
+      flex: 1 1 160px;
+      min-width: 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .location-text strong {
       color: var(--color-dark);
@@ -402,7 +410,7 @@ import { PaymentModalComponent } from '../../shared/components/payment-modal/pay
       font-weight: 700;
       padding: 0.2rem 0.55rem;
       border-radius: var(--radius-full);
-      margin-left: 0.25rem;
+      flex-shrink: 0;
     }
 
     .doctor-desc {

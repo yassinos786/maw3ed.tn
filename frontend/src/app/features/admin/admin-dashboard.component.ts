@@ -518,7 +518,7 @@ type AdminTab = 'VERIFICATION' | 'USERS' | 'FINANCE' | 'AUDIT';
           </div>
 
           <div class="table-responsive" *ngIf="!loadingAudit()">
-            <table class="data-table">
+            <table class="data-table audit-table">
               <thead>
                 <tr>
                   <th>Horodatage</th>
@@ -532,10 +532,10 @@ type AdminTab = 'VERIFICATION' | 'USERS' | 'FINANCE' | 'AUDIT';
               </thead>
               <tbody>
                 <tr *ngFor="let log of filteredAuditLogs()">
-                  <td class="text-nowrap font-mono text-xs">{{ formatLogDate(log.timestamp) }}</td>
-                  <td>
+                  <td class="font-mono text-xs audit-date-cell">{{ formatLogDate(log.timestamp) }}</td>
+                  <td class="audit-actor-cell">
                     <strong>{{ log.userName || 'Système' }}</strong>
-                    <div class="text-xs text-muted">{{ log.userEmail || '-' }}</div>
+                    <div class="text-xs text-muted wrap-anywhere">{{ log.userEmail || '-' }}</div>
                   </td>
                   <td>
                     <span class="badge badge-outline action-badge">{{ log.action }}</span>
@@ -547,7 +547,7 @@ type AdminTab = 'VERIFICATION' | 'USERS' | 'FINANCE' | 'AUDIT';
                     </span>
                   </td>
                   <td class="text-sm max-w-desc">{{ log.details }}</td>
-                  <td class="font-mono text-xs text-muted">{{ log.ipAddress }}</td>
+                  <td class="font-mono text-xs text-muted ip-cell">{{ log.ipAddress || '-' }}</td>
                 </tr>
               </tbody>
             </table>
@@ -852,21 +852,28 @@ type AdminTab = 'VERIFICATION' | 'USERS' | 'FINANCE' | 'AUDIT';
       margin-bottom: 0.5rem;
     }
 
-    .filters-bar { display: flex; gap: 1rem; align-items: center; }
-    .filter-select-wrap { min-width: 170px; }
+    .filters-bar { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .filter-select-wrap { min-width: 170px; flex: 0 1 auto; }
 
-    .table-card { padding: 1.75rem; border-radius: var(--radius-lg); }
-    .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .table-card { padding: 1.75rem; border-radius: var(--radius-lg); overflow: hidden; }
+    .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.75rem; }
     .table-title { font-size: 1.2rem; font-weight: 800; margin: 0 0 0.25rem; }
     .table-sub { font-size: 0.85rem; color: var(--color-muted); margin: 0; }
-    .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    .data-table th { text-align: left; padding: 0.85rem 1rem; border-bottom: 2px solid var(--color-border); color: var(--color-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; }
-    .data-table td { padding: 0.9rem 1rem; border-bottom: 1px solid var(--color-border); vertical-align: middle; }
+    .table-responsive { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .data-table th { text-align: left; padding: 0.75rem 0.7rem; border-bottom: 2px solid var(--color-border); color: var(--color-muted); font-size: 0.72rem; text-transform: uppercase; font-weight: 700; white-space: nowrap; }
+    .data-table td { padding: 0.8rem 0.7rem; border-bottom: 1px solid var(--color-border); vertical-align: middle; overflow-wrap: anywhere; word-break: break-word; }
+    .audit-table th, .audit-table td { padding: 0.75rem 0.55rem; }
+    .audit-date-cell { white-space: nowrap; }
+    .audit-actor-cell { max-width: 185px; min-width: 130px; }
+    .wrap-anywhere { overflow-wrap: anywhere; word-break: break-word; }
+    .ip-cell { max-width: 130px; overflow-wrap: anywhere; word-break: break-all; white-space: normal; }
     
-    .user-row-info { display: flex; align-items: center; gap: 0.75rem; }
+    .user-row-info { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
     .user-row-avatar {
       width: 36px;
       height: 36px;
+      flex-shrink: 0;
       border-radius: 50%;
       background: var(--color-muted-light);
       display: inline-flex;
@@ -885,7 +892,7 @@ type AdminTab = 'VERIFICATION' | 'USERS' | 'FINANCE' | 'AUDIT';
     .status-pending { background: #fef3c7; color: #92400e; }
     .status-suspended { background: #fee2e2; color: #991b1b; }
 
-    .btn-group-actions { display: flex; gap: 0.4rem; align-items: center; }
+    .btn-group-actions { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
     .btn-xs { padding: 0.3rem 0.6rem; font-size: 0.75rem; font-weight: 700; border-radius: var(--radius-sm); cursor: pointer; }
     .btn-outline-warning { border: 1px solid #f59e0b; color: #d97706; background: transparent; }
     .btn-outline-success { border: 1px solid #10b981; color: #059669; background: transparent; }
@@ -950,29 +957,30 @@ type AdminTab = 'VERIFICATION' | 'USERS' | 'FINANCE' | 'AUDIT';
 
     /* Validation card */
     .pending-doctors-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
-    .doc-verify-card { padding: 1.5rem; border-radius: var(--radius-lg); }
-    .doc-verify-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-    .doc-info { display: flex; align-items: center; gap: 1rem; }
-    .doc-avatar { width: 48px; height: 48px; border-radius: 50%; background: #e0f2fe; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem; color: var(--color-primary); }
-    .doc-title { font-size: 1.15rem; font-weight: 800; margin: 0 0 0.25rem; }
-    .doc-fee-badge { text-align: right; }
+    .doc-verify-card { padding: 1.5rem; border-radius: var(--radius-lg); min-width: 0; overflow: hidden; }
+    .doc-verify-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem; }
+    .doc-info { display: flex; align-items: center; gap: 1rem; min-width: 0; flex: 1; }
+    .doc-avatar { width: 48px; height: 48px; border-radius: 50%; background: #e0f2fe; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem; color: var(--color-primary); flex-shrink: 0; }
+    .doc-title { font-size: 1.15rem; font-weight: 800; margin: 0 0 0.25rem; overflow-wrap: anywhere; }
+    .doc-fee-badge { text-align: right; flex-shrink: 0; }
     .fee-val { font-size: 1.2rem; font-weight: 800; color: var(--color-dark); display: block; }
     .fee-lbl { font-size: 0.75rem; color: var(--color-muted); }
-    .highlight-box { background: #fffbeb; border: 1px solid #fde68a; padding: 0.75rem 1rem; border-radius: var(--radius-md); margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
+    .highlight-box { background: #fffbeb; border: 1px solid #fde68a; padding: 0.75rem 1rem; border-radius: var(--radius-md); margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
     .council-badge { display: flex; align-items: center; gap: 0.4rem; color: #92400e; font-size: 1rem; }
-    .doc-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .doc-meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.75rem; }
+    .doc-meta-item { min-width: 0; overflow-wrap: anywhere; word-break: break-word; }
     .meta-label { font-size: 0.78rem; color: var(--color-muted); display: block; }
-    .meta-val { font-size: 0.9rem; color: var(--color-dark); }
-    .doc-verify-footer { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.25rem; border-top: 1px solid var(--color-border); padding-top: 1rem; }
+    .meta-val { font-size: 0.9rem; color: var(--color-dark); overflow-wrap: anywhere; word-break: break-word; }
+    .doc-verify-footer { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.25rem; border-top: 1px solid var(--color-border); padding-top: 1rem; flex-wrap: wrap; }
 
     /* Audit & Metrics Styles */
     .font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
-    .action-badge { font-size: 0.75rem; font-weight: 700; background: #f8fafc; border-color: #cbd5e1; color: var(--color-dark); }
-    .category-pill { font-size: 0.72rem; font-weight: 700; color: #475569; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+    .action-badge { font-size: 0.7rem; font-weight: 700; background: #f8fafc; border-color: #cbd5e1; color: var(--color-dark); white-space: normal; word-break: break-word; }
+    .category-pill { font-size: 0.68rem; font-weight: 700; color: #475569; background: #f1f5f9; padding: 0.2rem 0.45rem; border-radius: 4px; display: inline-block; max-width: 135px; overflow-wrap: anywhere; }
     .badge-INFO { background: #dcfce7; color: #166534; font-weight: 700; }
     .badge-WARNING { background: #fef3c7; color: #92400e; font-weight: 700; }
     .badge-CRITICAL { background: #fee2e2; color: #991b1b; font-weight: 700; }
-    .max-w-desc { max-width: 380px; line-height: 1.4; color: var(--color-dark); }
+    .max-w-desc { max-width: 260px; min-width: 160px; line-height: 1.4; color: var(--color-dark); overflow-wrap: anywhere; word-break: break-word; }
     .bg-yellow { background: #fef3c7; }
     .bg-red { background: #fee2e2; }
 
