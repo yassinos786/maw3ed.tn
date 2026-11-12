@@ -1,0 +1,45 @@
+# Maw3ed.tn
+
+# OS & Environment
+.DS_Store
+Thumbs.db
+.env
+.env.local
+*.log
+
+# IDE & Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Frontend (Angular / Node)
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+node_modules/
+dist/
+.angular/
+.npm/
+
+# Backend (Java / Spring Boot / Maven)
+backend/target/
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Triage Service (Python / FastAPI)
+triage_service/__pycache__/
+triage_service/.pytest_cache/
+__pycache__/
+*.py[cod]
+*$py.class
+env/
+venv/
+.venv/
+.pytest_cache/
+
+# Local Docker volumes & data
+mongo-data/

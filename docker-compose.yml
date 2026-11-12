@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  maw3ed-mongo:
+    image: mongo:7.0
+    container_name: maw3ed-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=maw3ed_db
+    volumes:
+      - mongo-data:/data/db
+
+  mongo-express:
+    image: mongo-express:1.0.2
+    container_name: maw3ed-mongo-express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=maw3ed-mongo
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_BASICAUTH=false
+    depends_on:
+      - maw3ed-mongo
+
+  triage-service:
+    build:
+      context: ./triage_service
+      dockerfile: Dockerfile
+    container_name: maw3ed-triage-service
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+
+volumes:
+  mongo-data:
+    driver: local
